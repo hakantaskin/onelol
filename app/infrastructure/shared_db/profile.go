@@ -56,7 +56,7 @@ func NewProfileRepository(db *gorm.DB) *ProfileRepository {
 	}
 }
 
-func (s *ProfileRepository) Create(ctx context.Context, discount entities.Profile) (entities.ProfileID, error) {
+func (s *ProfileRepository) Create(ctx context.Context, profile entities.Profile) (entities.ProfileID, error) {
 	db := pctx.DBTransaction(ctx)
 	if db == nil {
 		var err error
@@ -66,7 +66,7 @@ func (s *ProfileRepository) Create(ctx context.Context, discount entities.Profil
 		}
 	}
 
-	entry := ToProfileEntry(discount)
+	entry := ToProfileEntry(profile)
 
 	if err := db.Create(&entry).Error; err != nil {
 		return 0, err
@@ -117,8 +117,8 @@ func (s *ProfileRepository) GetList(ctx context.Context, filters params.GetProfi
 	}
 
 	scopes = append(scopes,
-		discountLimitScope(filters.Limit),
-		discountOffsetScope(filters.Offset),
+		profileLimitScope(filters.Limit),
+		profileOffsetScope(filters.Offset),
 	)
 
 	var entries []ProfileEntry
@@ -162,9 +162,9 @@ func profileGetListCommonScopes(filters params.GetProfileListParams) ([]func(*go
 	}
 
 	scopes = append(scopes,
-		discountStartDateScope(filters.StartDate),
-		discountEndDateScope(filters.EndDate),
-		discountFullNameScope(filters.FullName),
+		profileStartDateScope(filters.StartDate),
+		profileEndDateScope(filters.EndDate),
+		profileFullNameScope(filters.FullName),
 		func(db *gorm.DB) *gorm.DB {
 			return db.Order("p.id DESC").
 				Group("p.id")
@@ -206,7 +206,7 @@ func ToProfileEntity(profile ProfileEntry) entities.Profile {
 	}
 }
 
-func discountFullNameScope(title string) scopeFn {
+func profileFullNameScope(title string) scopeFn {
 	return func(db *gorm.DB) *gorm.DB {
 		if title != "" {
 			return db.Where("p.full_name LIKE ?", "%"+title+"%")
@@ -216,7 +216,7 @@ func discountFullNameScope(title string) scopeFn {
 	}
 }
 
-func discountEndDateScope(endDate time.Time) scopeFn {
+func profileEndDateScope(endDate time.Time) scopeFn {
 	return func(db *gorm.DB) *gorm.DB {
 		if endDate.IsZero() {
 			return db
@@ -226,7 +226,7 @@ func discountEndDateScope(endDate time.Time) scopeFn {
 	}
 }
 
-func discountStartDateScope(startDate time.Time) scopeFn {
+func profileStartDateScope(startDate time.Time) scopeFn {
 	return func(db *gorm.DB) *gorm.DB {
 		if startDate.IsZero() {
 			return db
@@ -236,7 +236,7 @@ func discountStartDateScope(startDate time.Time) scopeFn {
 	}
 }
 
-func discountLimitScope(limit int) scopeFn {
+func profileLimitScope(limit int) scopeFn {
 	return func(db *gorm.DB) *gorm.DB {
 		if limit > 0 {
 			return db.Limit(limit)
@@ -246,7 +246,7 @@ func discountLimitScope(limit int) scopeFn {
 	}
 }
 
-func discountOffsetScope(offset int) scopeFn {
+func profileOffsetScope(offset int) scopeFn {
 	return func(db *gorm.DB) *gorm.DB {
 		if offset > 0 {
 			return db.Offset(offset)

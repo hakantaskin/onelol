@@ -150,6 +150,7 @@ func buildProfileListFilterFromRequestArgs(form url.Values) (profile.FiltersForm
 		Active:    active,
 		StartDate: form.Get("start_date"),
 		EndDate:   form.Get("end_date"),
+		FullName:  form.Get("full_name"),
 		ShowAll:   showAll,
 	}, nil
 }
