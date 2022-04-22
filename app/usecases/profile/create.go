@@ -60,8 +60,8 @@ func (s *CreateService) Create(ctx context.Context, form Form) (*dto.ProfileDTO,
 
 	profileEntity.ID = profileID
 	logEntry.WithFields(logrus.Fields{
-		"id":               profileEntity.ID,
-		"incentives.event": "discount_created",
+		"id":    profileEntity.ID,
+		"event": "profile_created",
 	}).Info("profile created")
 
 	return dto.BuildProfileDTO(profileEntity), nil

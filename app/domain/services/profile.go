@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/hakantaskin/onelol/app/domain/entities"
+	"github.com/hakantaskin/onelol/app/domain/params"
 )
 
 type ProfileCreator interface {
@@ -22,11 +23,18 @@ type ProfileUpdater interface {
 	Update(ctx context.Context, profile entities.Profile) error
 }
 
+type ProfileListGetter interface {
+	GetList(ctx context.Context, filters params.GetProfileListParams) (
+		profiles []entities.Profile, err error,
+	)
+}
+
 type ProfileService interface {
 	ProfileCreator
 	ProfileGetter
 	ProfileUpdater
 	ProfileDeleter
+	ProfileListGetter
 }
 
 type ProfileValidatorFn func(ctx context.Context, profile entities.Profile) error

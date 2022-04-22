@@ -54,8 +54,10 @@ func main() {
 	profileTransformer := transformer.NewProfileTransformer()
 	profileRepository := shared_db.NewProfileRepository(db)
 	profileCreatorService := service_profile.NewCreateService(profileRepository, validators.ValidateProfileEntity, profileTransformer)
+	profileGetterService := service_profile.NewGetService(profileRepository)
+	profileListService := service_profile.NewListService(profileRepository)
 
-	profilePresentation := crud_profile.NewController(profileCreatorService)
+	profilePresentation := crud_profile.NewController(profileCreatorService, profileGetterService, profileListService)
 	profilePresentation.Init(v1)
 
 	// Api && Service && Repository

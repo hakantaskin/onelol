@@ -21,11 +21,6 @@ type ProfileSocialAccountDTO struct {
 	Social   string `json:"social"`
 }
 
-type PaginatedProfileList struct {
-	Profiles   []ProfileDTO  `json:"profiles"`
-	Pagination PaginationDTO `json:"pagination"`
-}
-
 func BuildProfileDTO(
 	profileEntity entities.Profile,
 ) *ProfileDTO {

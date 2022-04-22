@@ -28,6 +28,7 @@ type FiltersForm struct {
 	LatestID  string `json:"latest_id"`
 	StartDate string `json:"start_date"`
 	EndDate   string `json:"end_date"`
+	FullName  string `json:"full_name"`
 	Active    *bool  `json:"active"`
 	ShowAll   *bool  `json:"show_all"`
 }

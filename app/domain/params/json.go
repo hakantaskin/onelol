@@ -32,3 +32,9 @@ func (j *JSON) Scan(value interface{}) error {
 
 	return json.Unmarshal(bytes, j)
 }
+
+type JsonResponse struct {
+	Data     interface{} `json:"data"`
+	ErrorMsg string      `json:"error_msg"`
+	Error    bool        `json:"error"`
+}

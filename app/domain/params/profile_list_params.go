@@ -10,6 +10,5 @@ type GetProfileListParams struct {
 	LatestID  string
 	StartDate time.Time
 	EndDate   time.Time
-	Active    *bool
-	ShowAll   *bool
+	FullName  string
 }

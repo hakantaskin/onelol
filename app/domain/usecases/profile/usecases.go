@@ -27,7 +27,6 @@ type ProfileUpdateService interface {
 	Update(ctx context.Context, discountID int, discountForm profile.UpdateForm) error
 }
 
-// ProfileListGetService ..
 type ProfileListGetService interface {
-	GetProfileList(ctx context.Context, filters profile.FiltersForm) (dto.PaginatedProfileList, error)
+	GetList(ctx context.Context, filters profile.FiltersForm) (dto.PaginatedProfileList, error)
 }
