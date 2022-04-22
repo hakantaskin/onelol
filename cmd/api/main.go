@@ -40,7 +40,16 @@ func init() {
 func main() {
 	var err error
 	l := setupLoggerEntry()
-	db := shared_db.NewConnector()
+
+	dbConfig := shared_db.DatabaseConfig{
+		Name: os.Getenv("MYSQL_USER_NAME"),
+		Host: os.Getenv("MYSQL_HOST_NAME"),
+		Port: os.Getenv("MYSQL_PORT"),
+		Pass: os.Getenv("MYSQL_PASS"),
+		DB:   os.Getenv("MYSQL_DB"),
+	}
+
+	db := shared_db.NewConnector(dbConfig)
 	err = shared_db.AutoMigrate(db)
 	if err != nil {
 		l.Error(err)
